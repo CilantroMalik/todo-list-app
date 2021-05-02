@@ -16,7 +16,7 @@ export const AddTodoForm = () => {
 
     const onCreateTaskClicked = () => {
         if (title && desc) {
-            dispatch(todoAdded({id: nanoid(), title, desc}))
+            dispatch(todoAdded({id: nanoid(), title, desc, done: false}))
             dispatch(toggleCreating(false))
             setTitle('')
             setDesc('')

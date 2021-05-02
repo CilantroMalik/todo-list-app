@@ -6,10 +6,24 @@
     padding-right: 20px;
 }
 
+.itemDone {
+    border: 2px solid mediumseagreen;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .todoTitle {
     font-size: xx-large;
 }
 
 .todoDesc {
     font-size: medium;
+}
+
+.doneButton {
+    border: 2px solid mediumseagreen;
+    border-radius: 20px;
+
 }
