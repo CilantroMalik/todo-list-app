@@ -2,16 +2,18 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './TodoList.module.css'
 import { toggleCreating } from "./creationSlice";
-import { todoCompleted } from './todosSlice'
-import '../../main.css'
+import { todoCompleted } from './todosSlice';
+import { animateCreateTask } from "./animationSlice";
+import '../../main.css';
 
 export const TodoList = () => {
     const todos = useSelector(state => state.todos)
     const creation = useSelector(state => state.creation)
-    console.log(todos)
+
     const dispatch = useDispatch()
 
     const createTaskClicked = () => {
+        dispatch(animateCreateTask(true))
         dispatch(toggleCreating(true))
     }
 
@@ -20,7 +22,6 @@ export const TodoList = () => {
     }
 
     const completeClicked = taskId => {
-        console.log("completing task")
         dispatch(todoCompleted(taskId))
     }
 

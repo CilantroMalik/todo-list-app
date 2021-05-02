@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit"
 import { todoAdded } from "./todosSlice";
 import { toggleCreating } from "./creationSlice";
+import styles from './TodoList.module.css'
 import '../../main.css'
 
 export const AddTodoForm = () => {
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
+
+    const animation = useSelector(state => state.animation.createTaskAnimating)
 
     const dispatch = useDispatch()
 
@@ -24,7 +27,7 @@ export const AddTodoForm = () => {
     }
 
     return (
-        <section>
+        <section className={animation ? styles.animation : ""}>
             <h2>Add New Task</h2>
             <form>
                 <label htmlFor="taskTitle">Task:</label>
