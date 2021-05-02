@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit"
 import { todoAdded } from "./todosSlice";
+import { toggleCreating } from "./creationSlice";
 import '../../main.css'
 
 export const AddTodoForm = () => {
@@ -15,9 +16,8 @@ export const AddTodoForm = () => {
 
     const onCreateTaskClicked = () => {
         if (title && desc) {
-            dispatch(
-                todoAdded({id: nanoid(), title, desc})
-            )
+            dispatch(todoAdded({id: nanoid(), title, desc}))
+            dispatch(toggleCreating(false))
             setTitle('')
             setDesc('')
         }
