@@ -10,6 +10,8 @@ export const TodoList = () => {
     const todos = useSelector(state => state.todos)
     const creation = useSelector(state => state.creation)
 
+    //const [completeAnim, setCompleteAnim] = useState(false)
+
     const dispatch = useDispatch()
 
     const createTaskClicked = () => {
@@ -27,11 +29,14 @@ export const TodoList = () => {
     }
 
     const renderedTodos = todos.map(todoItem => (
-        <article className={todoItem.done ? styles.itemDone : styles.item} key={todoItem.id}>
-            <h3 className={styles.todoTitle}>{todoItem.title}</h3>
-            <p className={styles.todoDesc}>{todoItem.desc}</p>
-            {!todoItem.done && <button className='muted-button' onClick={() => {completeClicked(todoItem.id)}}>Complete</button>}
-        </article>
+        <div style={{transition: 'all 1s ease'}}>
+            <article className={todoItem.done ? styles.itemDone : styles.item} key={todoItem.id}>
+                <h3 className={styles.todoTitle}>{todoItem.title}</h3>
+                <p className={styles.todoDesc}>{todoItem.desc}</p>
+                {!todoItem.done ? <button className='muted-button' onClick={() => {completeClicked(todoItem.id)}}>Complete</button>
+                : <button disabled className='accent-button'>Completed!</button>}
+            </article>
+        </div>
     ))
 
     return (

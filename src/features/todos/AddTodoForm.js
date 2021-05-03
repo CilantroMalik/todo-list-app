@@ -25,7 +25,7 @@ export const AddTodoForm = () => {
         if (title && desc) {
             dispatch(todoAdded({id: nanoid(), title, desc, done: false}))
             dispatch(animateCancelTask(true))
-            setTimeout(() => dispatch(toggleCreating(false)), 450)
+            setTimeout(() => dispatch(toggleCreating(false)), 375)
             setTitle('')
             setDesc('')
         } else {
