@@ -9,13 +9,15 @@ import '../../main.css'
 export const AddTodoForm = () => {
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
+    const [titleError, setTitleError] = useState(false)
+    const [descError, setDescError] = useState(false)
 
     const animation = useSelector(state => state.animation.createTaskAnimating)
 
     const dispatch = useDispatch()
 
-    const onTitleChanged = e => setTitle(e.target.value)
-    const onDescChanged = e => setDesc(e.target.value)
+    const onTitleChanged = e => { setTitle(e.target.value); setTitleError(false) }
+    const onDescChanged = e => { setDesc(e.target.value); setDescError(false) }
 
     const onCreateTaskClicked = () => {
         if (title && desc) {
@@ -23,7 +25,16 @@ export const AddTodoForm = () => {
             dispatch(toggleCreating(false))
             setTitle('')
             setDesc('')
+        } else {
+            if (!title) { setTitleError(true) }
+            if (!desc) { setDescError(true) }
         }
+    }
+
+    const onCancelClicked = () => {
+        dispatch(toggleCreating(false))
+        setTitle('')
+        setDesc('')
     }
 
     return (
@@ -31,10 +42,12 @@ export const AddTodoForm = () => {
             <h2>Add New Task</h2>
             <form>
                 <label htmlFor="taskTitle">Task:</label>
-                <input type="text" id="taskTitle" name="taskTitle" value={title} onChange={onTitleChanged} placeholder="Task Title"/>
+                <input type="text" id="taskTitle" name="taskTitle" className={titleError ? "has-error" : ""} value={title} onChange={onTitleChanged} placeholder="Task Title"/>
                 <label htmlFor="taskDesc">Description:</label>
-                <textarea id="taskDesc" name="taskDesc" value={desc} onChange={onDescChanged} placeholder="Task Description"/>
-                <button type="button" onClick={onCreateTaskClicked}>Create Task</button>
+                <textarea id="taskDesc" name="taskDesc" className={descError ? "has-error" : ""} value={desc} onChange={onDescChanged} placeholder="Task Description"/>
+                <hr style={{marginTop: 25}}/>
+                <button type="button" onClick={onCreateTaskClicked} style={{marginRight: 10}}>Create Task</button>
+                <button type="button" className='muted-button' onClick={onCancelClicked}>Cancel</button>
             </form>
         </section>
     )
