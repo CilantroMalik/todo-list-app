@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './TodoList.module.css'
 import { toggleCreating } from "./creationSlice";
 import { todoCompleted } from './todosSlice';
-import { animateCreateTask } from "./animationSlice";
+import { animateCreateTask, animateCancelTask } from "./animationSlice";
 import '../../main.css';
 
 export const TodoList = () => {
@@ -18,6 +18,7 @@ export const TodoList = () => {
     }
 
     const cancelClicked = () => {
+        dispatch(animateCancelTask(true))
         dispatch(toggleCreating(false))
     }
 
@@ -29,13 +30,12 @@ export const TodoList = () => {
         <article className={todoItem.done ? styles.itemDone : styles.item} key={todoItem.id}>
             <h3 className={styles.todoTitle}>{todoItem.title}</h3>
             <p className={styles.todoDesc}>{todoItem.desc}</p>
-            {console.log(todoItem)}
             {!todoItem.done && <button className='muted-button' onClick={() => {completeClicked(todoItem.id)}}>Complete</button>}
         </article>
     ))
 
     return (
-        <section>
+        <section className={styles.fadeInElement}>
             { !creation.creation ? <button onClick={createTaskClicked}>Create Task</button> : <button onClick={cancelClicked}>Cancel</button>}
             <h2>Task List</h2>
             {renderedTodos}

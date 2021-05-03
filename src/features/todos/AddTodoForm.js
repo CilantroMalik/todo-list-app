@@ -5,6 +5,7 @@ import { todoAdded } from "./todosSlice";
 import { toggleCreating } from "./creationSlice";
 import styles from './TodoList.module.css'
 import '../../main.css'
+import {animateCreateTask, animateCancelTask} from "./animationSlice";
 
 export const AddTodoForm = () => {
     const [title, setTitle] = useState('')
@@ -12,7 +13,8 @@ export const AddTodoForm = () => {
     const [titleError, setTitleError] = useState(false)
     const [descError, setDescError] = useState(false)
 
-    const animation = useSelector(state => state.animation.createTaskAnimating)
+    const animationAppear = useSelector(state => state.animation.createTaskAnimating)
+    const animationDisappear = useSelector(state => state.animation.cancelTaskAnimating)
 
     const dispatch = useDispatch()
 
@@ -22,7 +24,8 @@ export const AddTodoForm = () => {
     const onCreateTaskClicked = () => {
         if (title && desc) {
             dispatch(todoAdded({id: nanoid(), title, desc, done: false}))
-            dispatch(toggleCreating(false))
+            dispatch(animateCancelTask(true))
+            setTimeout(() => dispatch(toggleCreating(false)), 450)
             setTitle('')
             setDesc('')
         } else {
@@ -32,13 +35,15 @@ export const AddTodoForm = () => {
     }
 
     const onCancelClicked = () => {
-        dispatch(toggleCreating(false))
+        dispatch(animateCancelTask(true))
+        setTimeout(() => dispatch(toggleCreating(false)), 375)
         setTitle('')
         setDesc('')
     }
 
     return (
-        <section className={animation ? styles.animation : ""}>
+        <section className={animationAppear ? styles.animation_appearUp : (animationDisappear ? styles.animation_disappearDown : "")}
+        onAnimationEnd={() => {if (animationAppear) {dispatch(animateCreateTask(false))} if (animationDisappear) {dispatch(animateCancelTask(false))}}}>
             <h2>Add New Task</h2>
             <form>
                 <label htmlFor="taskTitle">Task:</label>

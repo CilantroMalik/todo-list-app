@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    createTaskAnimating: true
+    createTaskAnimating: false,
+    cancelTaskAnimating: false
 }
 
 const animationSlice = createSlice({
@@ -10,10 +11,13 @@ const animationSlice = createSlice({
     reducers: {
         animateCreateTask(state, action) {
             state.createTaskAnimating = action.payload
+        },
+        animateCancelTask(state, action) {
+            state.cancelTaskAnimating = action.payload
         }
     }
 })
 
-export const { animateCreateTask } = animationSlice.actions
+export const { animateCreateTask, animateCancelTask } = animationSlice.actions
 
 export default animationSlice.reducer
