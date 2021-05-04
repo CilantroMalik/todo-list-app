@@ -10,8 +10,6 @@ export const TodoList = () => {
     const todos = useSelector(state => state.todos)
     const creation = useSelector(state => state.creation)
 
-    //const [completeAnim, setCompleteAnim] = useState(false)
-
     const dispatch = useDispatch()
 
     const createTaskClicked = () => {
@@ -29,7 +27,7 @@ export const TodoList = () => {
     }
 
     const renderedTodos = todos.map(todoItem => (
-        <div style={{transition: 'all 1s ease'}}>
+        <div style={{breakInside: 'avoid-column'}}>
             <article className={todoItem.done ? styles.itemDone : styles.item} key={todoItem.id}>
                 <h3 className={styles.todoTitle}>{todoItem.title}</h3>
                 <p className={styles.todoDesc}>{todoItem.desc}</p>
@@ -43,7 +41,7 @@ export const TodoList = () => {
         <section className={styles.fadeInElement}>
             { !creation.creation ? <button onClick={createTaskClicked}>Create Task</button> : <button onClick={cancelClicked}>Cancel</button>}
             <h2>Task List</h2>
-            {renderedTodos}
+            <div style={{columnCount: Math.ceil(renderedTodos.length/3)}}>{renderedTodos}</div>
         </section>
     )
 }
